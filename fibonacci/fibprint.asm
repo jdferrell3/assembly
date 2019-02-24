@@ -41,20 +41,21 @@ main:
        mov ecx, 0x0
        mov edx, 0x1
        mov esi, 0x0
-.loop:
+       jmp .loop     ; jump over print the first time
+.print:
        pushaq        ; too lazy to move things around to preserve values
-
        mov rdi, fmt  ; fmt string
        mov rsi, rax  ; value
        mov rax, 0
        call printf
        popaq         ; restore our values
-
+.loop:
        lea eax, [rsi+rdx*1]
        add ecx, 0x1
        mov esi, edx
        mov edx, eax
+
        cmp eax, edi
-       jbe .loop
+       jbe .print
 .end:
        ret
